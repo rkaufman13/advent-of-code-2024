@@ -22,7 +22,8 @@ def check_safety(line, depth):
             is_valid = False
 
             for idx, _ in enumerate(line):
-                new_line = line[0:idx]+line[idx+1:len(line)]
+                new_line = (list(line))
+                new_line.pop(idx)
                 result = check_safety(new_line, depth+1)
                 if result:
                     is_valid=True
