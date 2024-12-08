@@ -44,26 +44,11 @@ for antenna in tqdm.tqdm(antennas.keys()):
     direction = 1
     for pair in all_pairs:
         x_diff, y_diff = calculate_manhattan_distance(pair)
-        point = pair[0]
-        x,y = find_next(point, direction, (x_diff,y_diff))
-        while 0 <= x < len(data[0]) and 0 <= y < len(data):
-            writable_data[y][x] = "#"
-            x,y = find_next((x,y), direction, (x_diff,y_diff))
-        direction=-1
-        while 0 <= x < len(data[0]) and 0 <= y < len(data):
-            writable_data[y][x] = "#"
-            x, y = find_next((x, y), direction, (x_diff, y_diff))
-        direction=1
-        point = pair[1]
-        x,y = find_next(point, direction,(x_diff,y_diff))
-        while 0 <= x < len(data[0]) and 0 <= y < len(data):
-            writable_data[y][x]="#"
-            x, y = find_next((x, y), direction, (x_diff,y_diff))
-        direction =-1
-        x, y = find_next(point, direction, (x_diff, y_diff))
-        while 0 <= x < len(data[0]) and 0 <= y < len(data):
-            writable_data[y][x] = "#"
-            x, y = find_next((x, y), direction, (x_diff, y_diff))
-
+        for point in pair:
+            for direction in [1,-1]:
+                x,y = find_next(point, direction, (x_diff,y_diff))
+                while 0 <= x < len(data[0]) and 0 <= y < len(data):
+                    writable_data[y][x] = "#"
+                    x,y = find_next((x,y), direction, (x_diff,y_diff))
 
 print(len([ant for line in writable_data for ant in line if ant!="."]))
